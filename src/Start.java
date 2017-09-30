@@ -10,6 +10,19 @@ public class Start {
 	static Constraint b;
 	static ArrayList<Constraint> constraints;
 	public static void main(String[] args) {
+		Variable X = new Variable("x");
+		Variable one = new Variable(1,"1");
+		Variable two = new Variable(2,"2");
+		Variable four = new Variable(4,"4");
+		Variable five = new Variable(5,"5");
+		Variable brackets = X.performOperation(Operations.MULTIPLY, X.performOperation(Operations.ADD, one));
+		Variable left = brackets.performOperation(Operations.DIVIDE, two);
+		Variable top = X.performOperation(Operations.SUBTRACT, four);
+		Variable bottom = X.performOperation(Operations.ADD, five);
+		Variable right = top.performOperation(Operations.DIVIDE, bottom);
+		Variable whole = left.performOperation(Operations.ADD, right);
+		whole.printOperationSummary();
+
 		//Doing it for 2 variables and 2 constraints
 		tableau = new DualList();
 		x = new Variable("x");
@@ -42,8 +55,8 @@ public class Start {
 		int column = -1;
 		for(int i = 1;i<tableau.getRow(1).size();i++){
 			Variable j = tableau.get(1, i);
-			if(j.getOperations().size()>0)
-			if(j.getOperations().get(0).getV().getValue()==-1 && j.getOperations().size()==1){
+			if(j.getOperations()!=null)
+			if(j.getOperations().get(0).getV().getValue()==-1){
 				column = i;
 				break;
 			}
@@ -69,8 +82,9 @@ public class Start {
 	}
 	private static void doSimplex(int row, int column){
 		Variable pivot = tableau.get(row, column);
+		Variable staticPivot = new Variable(pivot);
 		for(int i = 0; i<tableau.getRow(row).size(); i++){
-			tableau.set(tableau.get(row, i).performOperation(Operations.DIVIDE, pivot), row, i);
+			tableau.set(tableau.get(row, i).performOperation(Operations.DIVIDE, staticPivot), row, i);
 		}
 		for(int i = 1; i<tableau.getColumn(column).size(); i++){
 			Variable pivotInRow = tableau.get(i, column);

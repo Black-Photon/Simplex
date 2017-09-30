@@ -1,12 +1,10 @@
 public class Operation {
 	private Operations o;
 	private Variable v;
-	private int order;
 
-	public Operation(Operations o, Variable v, int order){
+	public Operation(Operations o, Variable v){
 		this.o = o;
 		this.v = v;
-		this.order = order;
 	}
 
 	public Operations getO() {
@@ -23,13 +21,5 @@ public class Operation {
 
 	public void setV(Variable v) {
 		this.v = v;
-	}
-
-	public int getOrder() {
-		return order;
-	}
-
-	public void setOrder(int order) {
-		this.order = order;
 	}
 }
