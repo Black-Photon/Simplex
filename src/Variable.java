@@ -122,5 +122,6 @@ public class Variable {
 
 	public void setLabel(String label) {
 		this.label = label;
+		if(operations.size()==0) operationsApplied = label;
 	}
 }

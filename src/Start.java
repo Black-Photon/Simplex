@@ -10,6 +10,8 @@ public class Start {
 	static Constraint b;
 	static ArrayList<Constraint> constraints;
 	public static void main(String[] args) {
+		/* TESTING!!!
+
 		Variable X = new Variable("x");
 		Variable one = new Variable(1,"1");
 		Variable two = new Variable(2,"2");
@@ -21,7 +23,7 @@ public class Start {
 		Variable bottom = X.performOperation(Operations.ADD, five);
 		Variable right = top.performOperation(Operations.DIVIDE, bottom);
 		Variable whole = left.performOperation(Operations.ADD, right);
-		whole.printOperationSummary();
+		whole.printOperationSummary();*/
 
 		//Doing it for 2 variables and 2 constraints
 		tableau = new DualList();
@@ -52,32 +54,35 @@ public class Start {
 		tableau.set(tableau.get(1,1).performOperation(Operations.MULTIPLY, new Variable(-1,"-1")),1,1);
 		tableau.set(tableau.get(1,2).performOperation(Operations.MULTIPLY, new Variable(-1,"-1")),1,2);
 
-		int column = -1;
-		for(int i = 1;i<tableau.getRow(1).size();i++){
-			Variable j = tableau.get(1, i);
-			if(j.getOperations()!=null)
-			if(j.getOperations().get(0).getV().getValue()==-1){
-				column = i;
-				break;
+		for(int j = 0; j<profit.getVariables().size()-2;j++) {
+			int column = calculateColumn(j);
+
+			int row = calculateRow(column,j);
+
+			doSimplex(row, column);
+
+
+			//System.out.println("---------TESTING---------");
+			//tableau.get(2,3).printOperationSummary();
+			//System.out.println("---------TESTING---------");
+
+			//Answers to First Run
+
+			//Profit
+			System.out.println("Profit:");
+			tableau.get(1, tableau.getRow(1).size() - 1).printOperationSummary();
+
+			//Variables
+			System.out.println("\nVariables:");
+			for (int i = 0; i < profit.getVariables().size() - 2; i++) {
+				System.out.println(tableau.get(0, i + 1).getLabel() + ":");
+				//System.out.println("TEST:");
+				//tableau.get(calculateRow(i + 1,j), i + 1).printOperationSummary();
+				System.out.println("VALUE:");
+				tableau.get(calculateRow(i + 1,j), tableau.getRow(calculateRow(i + 1,j)).size() - 1).printOperationSummary();
+				System.out.println("\n");
 			}
 		}
-		if(column==-1){
-			finish();
-			return;
-		};
-
-		int row = tableau.getColumn(column).size()-column;
-
-		tableau.get(1,1).printOperationSummary();
-
-		tableau.print();
-
-		doSimplex(row, column);
-
-		tableau.print();
-
-		tableau.get(1,1).printOperationSummary();
-
 
 	}
 	private static void doSimplex(int row, int column){
@@ -104,5 +109,28 @@ public class Start {
 				tableau.get(i,j).setLabel(tableau.get(i,j).getLabel()+i);
 			}
 		}
+	}
+
+	//Calculates pivot rows and columns
+	private static int calculateRow(int iteration){
+		int column = calculateColumn(iteration);
+		return tableau.getColumn(column).size()-column;
+	}
+	private static int calculateRow(int column, int iteration){
+		return tableau.getColumn(column).size()-column;
+	}
+	private static int calculateColumn(int iteration){
+		return iteration+1;
+		/*int column = -1;
+		iteration = iteration+1;
+		Variable j = tableau.get(1, iteration);
+		if(j.getOperations()!=null)
+			if(j.getOperations().get(0).getV().getValue()==-1){
+				column = iteration;
+			}
+		if(column==-1){
+			finish();
+		}
+		return column;*/
 	}
 }
