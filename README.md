@@ -3,6 +3,7 @@ Investigation into the Simplex algorithm, and uses using programming
 I attempt to find a way for a computer to solve Simplex algebraically, for given Variables and Constaints
 
 ---UPDATE---
+
 On interpretation of results, I found that the assumptions needed for this to function include:
 1) The values of slack variables are irrelevant and can be ignored
 2) The pivot is chosen in a fixed order, irrespective of changing values
