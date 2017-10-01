@@ -102,9 +102,9 @@ public class Start {
 
 	}
 	private static void setTableauNames(){
-		for(int i = 1; i<tableau.getRow(0).size(); i++){
-			for(int j = 0; j<tableau.getColumn(0).size();j++){
-				tableau.get(j,i).setLabel(tableau.get(j,i).getLabel()+i);
+		for(int i = 1; i<tableau.getColumn(0).size(); i++){
+			for(int j = 0; j<tableau.getRow(0).size();j++){
+				tableau.get(i,j).setLabel(tableau.get(i,j).getLabel()+i);
 			}
 		}
 	}
