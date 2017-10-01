@@ -2,12 +2,9 @@ import java.util.ArrayList;
 
 public class Start {
 	static DualList<Variable> tableau;
-	static Variable x;
-	static Variable y;
-	static Variable value;
+	static Variable x,y,z, value;
 	static Profit profit;
-	static Constraint a;
-	static Constraint b;
+	static Constraint a, b;
 	static ArrayList<Constraint> constraints;
 	public static void main(String[] args) {
 		/* TESTING!!!
@@ -29,10 +26,11 @@ public class Start {
 		tableau = new DualList();
 		x = new Variable("x");
 		y = new Variable("y");
+		z = new Variable("z");
 		value = new Variable("v");
-		profit = new Profit(x, y, value);
-		a = new Constraint(x, y, value);
-		b = new Constraint(x, y, value);
+		profit = new Profit(x, y, z, value);
+		a = new Constraint(x, y, z, value);
+		b = new Constraint(x, y, z, value);
 		constraints = new ArrayList();
 		constraints.add(a);
 		constraints.add(b);
@@ -106,7 +104,7 @@ public class Start {
 	private static void setTableauNames(){
 		for(int i = 1; i<tableau.getRow(0).size(); i++){
 			for(int j = 0; j<tableau.getColumn(0).size();j++){
-				tableau.get(i,j).setLabel(tableau.get(i,j).getLabel()+i);
+				tableau.get(j,i).setLabel(tableau.get(j,i).getLabel()+i);
 			}
 		}
 	}
